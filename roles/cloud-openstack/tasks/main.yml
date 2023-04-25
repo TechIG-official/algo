@@ -49,14 +49,15 @@
   openstack.cloud.networks_info:
   register: os_network
 
-- name: Set the network as a fact
-  set_fact:
-    public_network_id: "{{ item.id }}"
-  when:
-    - item['router:external']|default(omit)
-    - item['admin_state_up']|default(omit)
-    - item['status'] == 'ACTIVE'
-  with_items: "{{ os_network.openstack_networks }}"
+# - name: Set the network as a fact
+#   set_fact:
+#     public_network_id: "{{ item.id }}"
+#   when:
+#     - item['router:external']|default(omit)
+#     - item['admin_state_up']|default(omit)
+#     - item['status'] == 'ACTIVE'
+#     - item['id'] == '6e1b757e-5d63-4057-b9af-bffa1c742893'
+#   with_items: "{{ os_network.openstack_networks }}"
 
 - name: Set facts
   set_fact:
@@ -72,7 +73,7 @@
     security_groups: "{{ security_group_name }}"
     userdata: "{{ lookup('template', 'files/cloud-init/base.yml') }}"
     nics:
-      - net-id: "{{ public_network_id }}"
+      - net-id: 6e1b757e-5d63-4057-b9af-bffa1c742893 #"{{ public_network_id }}"
   register: os_server
 
 - set_fact:
