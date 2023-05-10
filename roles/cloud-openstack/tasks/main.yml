@@ -56,12 +56,13 @@
     # - item['router:external']|default(omit)
     # - item['admin_state_up']|default(omit)
     # - item['status'] == 'ACTIVE'
-    - item['name'] == 'coe_cluster'
+    - item['name'] == "{{ cloud_providers.openstack.network }}"
   with_items: "{{ os_network.openstack_networks }}"
 
 - name: Set facts
   set_fact:
-    flavor_id: "{{ (os_flavor.openstack_flavors | sort(attribute='ram'))[0]['id'] }}"
+    # flavor_id: "{{ (os_flavor.openstack_flavors | sort(attribute='ram'))[0]['id'] }}"
+    flavor_id: "{{ cloud_providers.openstack.flavor }}"
     security_group_name: "{{ os_security_group['secgroup']['name'] }}"
 
 - name: Server created
